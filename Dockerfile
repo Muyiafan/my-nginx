@@ -29,5 +29,8 @@ RUN mkdir /build && cd /build && wget http://nginx.org/download/nginx-1.19.5.tar
 
 FROM nginx:1.19.5-alpine
 
+LABEL maintainer="me@muyiafan.com"
+
 ENV TIME_ZONE=Asia/Shanghai
 RUN ln -snf /usr/share/zoneinfo/$TIME_ZONE /etc/localtime && echo $TIME_ZONE > /etc/timezone
+COPY --from=builder /build/nginx-1.19.5/objs/ngx_http_headers_more_filter_module.so /etc/nginx/modules
