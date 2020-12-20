@@ -11,6 +11,7 @@ on:
 
 env:
   IMAGE_NAME: mainline
+  HUB_IMAGE_NAME: muyiafan/my-nginx
 
 jobs:
   test:
@@ -38,6 +39,7 @@ jobs:
 
       - name: Log into registry
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
+        run: echo "${{ secrets.DOCKER_HUB_KEY }}" | docker login -u muyiafan --password-stdin
 
       - name: Push image
         run: |
@@ -60,3 +62,5 @@ jobs:
 
           docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
           docker push $IMAGE_ID:$VERSION
+          docker tag $IMAGE_NAME $HUB_IMAGE_NAME:$VERSION
+          docker push $HUB_IMAGE_NAME:$VERSION
