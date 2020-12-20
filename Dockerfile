@@ -33,7 +33,7 @@ RUN mkdir /build && cd /build && wget http://nginx.org/download/nginx-${NGINX_VE
             --add-dynamic-module=/build/ngx_brotli \
       && make modules
 
-FROM nginx:${NGINX_VERSION}-alpine
+FROM nginx:1.19.6-alpine
 
 LABEL maintainer="me@muyiafan.com"
 
