@@ -1,8 +1,8 @@
-FROM alpine:3.13 as builder
+FROM alpine:latest as builder
 
 LABEL maintainer="me@muyiafan.com"
 
-ENV NGINX_VERSION 1.19.6
+ENV NGINX_VERSION 1.19.7
 
 RUN apk add --no-cache \
       gcc \
@@ -33,7 +33,7 @@ RUN mkdir /build && cd /build && wget http://nginx.org/download/nginx-${NGINX_VE
             --add-dynamic-module=/build/ngx_brotli \
       && make modules
 
-FROM nginx:1.19.6-alpine
+FROM nginx:1.19.7-alpine
 
 LABEL maintainer="me@muyiafan.com"
 
