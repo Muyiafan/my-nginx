@@ -2,7 +2,7 @@ FROM alpine:latest as builder
 
 LABEL maintainer="me@muyiafan.com"
 
-ENV NGINX_VERSION 1.19.7
+ENV NGINX_VERSION 1.20.0
 
 RUN apk add --no-cache \
       gcc \
@@ -33,7 +33,7 @@ RUN mkdir /build && cd /build && wget http://nginx.org/download/nginx-${NGINX_VE
             --add-dynamic-module=/build/ngx_brotli \
       && make modules
 
-FROM nginx:1.19.7-alpine
+FROM nginx:1.20.0-alpine
 
 LABEL maintainer="me@muyiafan.com"
 
