@@ -1,39 +1,23 @@
-FROM alpine:latest as builder
-
+FROM debian:bookworm as builder
 LABEL maintainer="me@muyiafan.com"
 
-ENV NGINX_VERSION 1.24.0
+ENV NGINX_VERSION 1.26.0
 
-RUN apk add --no-cache \
-      gcc \
-      libc-dev \
-      make \
-      openssl-dev \
-      pcre-dev \
-      zlib-dev \
-      linux-headers \
-      libxslt-dev \
-      gd-dev \
-      geoip-dev \
-      perl-dev \
-      libedit-dev \
-      mercurial \
-      bash \
-      alpine-sdk \
-      findutils \
-      git
-RUN mkdir /build && cd /build && wget http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz \
+RUN apt update \
+    && apt install -y libpcre3 libpcre3-dev zlib1g zlib1g-dev openssl libssl-dev wget git gcc make libbrotli-dev
+
+RUN mkdir /build \
+      && cd /build && wget http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz \
       && tar -xvf nginx-${NGINX_VERSION}.tar.gz \
-      && git clone https://github.com/openresty/headers-more-nginx-module.git \
-      && git clone https://github.com/google/ngx_brotli.git \
-      && cd ngx_brotli && git submodule update --init && cd .. \
+      && git clone --recurse-submodules https://github.com/openresty/headers-more-nginx-module.git \
+      && git clone --recurse-submodules https://github.com/google/ngx_brotli.git \
       && cd nginx-${NGINX_VERSION} \
       && ./configure --with-compat \
             --add-dynamic-module=/build/headers-more-nginx-module \
             --add-dynamic-module=/build/ngx_brotli \
       && make modules
 
-FROM nginx:1.24.0-alpine
+FROM nginx:1.26.0-bookworm
 
 LABEL maintainer="me@muyiafan.com"
 
