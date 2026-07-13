@@ -1,5 +1,5 @@
-FROM debian:trixie as builder
-LABEL maintainer="me@muyiafan.com"
+FROM debian:bookworm as builder
+LABEL maintainer="github.com/Muyiafan"
 
 ENV NGINX_VERSION 1.30.3
 
