@@ -1,7 +1,7 @@
-FROM debian:bookworm as builder
+FROM debian:trixie as builder
 LABEL maintainer="me@muyiafan.com"
 
-ENV NGINX_VERSION 1.28.1
+ENV NGINX_VERSION 1.30.3
 
 RUN apt update \
     && apt install -y libpcre3 libpcre3-dev zlib1g zlib1g-dev openssl libssl-dev wget git gcc make libbrotli-dev
@@ -17,7 +17,7 @@ RUN mkdir /build \
             --add-dynamic-module=/build/ngx_brotli \
       && make modules
 
-FROM nginx:1.28.1
+FROM nginx:1.30.3
 
 LABEL maintainer="me@muyiafan.com"
 
